@@ -7,4 +7,3 @@ def build_vocabulary(words: List[str], min_count: int = 1):
     vocab = {w: idx for idx, w in enumerate(valid_words)}
     inv_vocab = {idx: w for w, idx in vocab.items()}
     return vocab, inv_vocab, counter
-
