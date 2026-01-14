@@ -1,5 +1,3 @@
-# En este fichero se genera el par centro-contexto para el entrenamiento del Skip-Gram
-
 from typing import List, Tuple
 
 def generate_skipgram_pairs(sentences: List[List[str]], vocab: dict, window_size: int = 2) -> List[Tuple[int, int]]:

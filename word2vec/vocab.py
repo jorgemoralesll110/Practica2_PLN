@@ -1,5 +1,3 @@
-# En este fichero se construye el vocabulario
-
 from collections import Counter
 from typing import List
 

@@ -1,10 +1,9 @@
-# En este fichero se realiza la ejecución del programa, pero será llamado desde el cuaderno
-
 from word2vec.data import load_and_tokenize
 from word2vec.vocab import build_vocabulary
 from word2vec.pairs import generate_skipgram_pairs
 from word2vec.model import SkipGram
 from word2vec.analysis import print_neighbors, analogy_test
+from word2vec.analysis import average_neighbor_similarity
 
 def run_program(
         corpus_path: str = "resources/dataset_word2vec.txt",
@@ -21,7 +20,7 @@ def run_program(
     print("*"*70)
 
     print("\n Primer paso) Cargar y tokenizar el corpus")
-    sentences, all_words = load_and_tokenize(corpus_path)
+    sentences, all_words = load_and_tokenize(corpus_path, strip_accents=False, keep_numbers=False)
 
     print("\n Segundo paso) Construir el vocabulario")
     vocab, inv_vocab, counter = build_vocabulary(all_words, min_count=min_count)
@@ -36,6 +35,19 @@ def run_program(
     model = SkipGram(len(vocab), embedding_dim=embedding_dim, learning_rate=learning_rate)
     model.train(pairs, epochs=epochs, verbose_every=10)
 
+    final_loss = model.train(pairs, epochs=epochs, verbose_every=10)
+
+    print("\n Quinto paso) Evaluación cuantitativa de los embeddings")
+
+    test_words = ["perro", "gato", "coche", "casa"]
+    indices = [vocab[w] for w in test_words if w in vocab]
+
+    if indices:
+        avg_sim = average_neighbor_similarity(model, indices, top_k=5)
+        print(f"Average neighbor similarity: {avg_sim:.4f}")
+    else:
+        print("No test words found in vocabulary for evaluation.")
+
     if show_neighbors:
         print("\n" + "*"*70)
         print("ANÁLISIS DE LOS EMBEDDINGS")
@@ -49,8 +61,7 @@ def run_program(
         analogies =  [
             ("parís", "francia", "madrid"),
             ("perro", "ladra", "gato"),
-            ("niño", "niña", "profesor"),
-            ("médico", "médico", "médica")
+            ("niño", "niña", "profesor")
         ]
         for a, b, c in analogies:
             res = analogy_test(model, vocab, inv_vocab,a, b, c, top_k=3)
