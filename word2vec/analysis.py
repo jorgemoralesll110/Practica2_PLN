@@ -3,7 +3,7 @@ import numpy as np
 
 
 def print_neighbors(model, vocab, inv_vocab, words: List[str], top_k: int = 5):
-    print("\n ********** VECINOS MÁS CERCANOS **********")
+    print("\n VECINOS MÁS CERCANOS")
     for word in words:
         if word not in vocab:
             continue
