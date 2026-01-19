@@ -44,7 +44,7 @@ class SkipGram:
                 self.backward(c_idx, x_idx, h, y_pred)
             if verbose_every and (ep % verbose_every == 0):
                 print(f'Epoch {ep}/{epochs}: Loss: {total_loss/n:.4f}')
-            return total_loss / n
+        return total_loss / n
 
     def get_embeddings(self, idx: int):
         return self.W_in[idx]

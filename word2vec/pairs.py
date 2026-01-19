@@ -6,7 +6,7 @@ def generate_skipgram_pairs(sentences: List[List[str]], vocab: dict, window_size
         index = [vocab[w] for w in sentence if w in vocab]
         for i, center in enumerate(index):
             start = max(0, i - window_size)
-            end = min(len(index), i + window_size)
+            end = min(len(index), i + window_size + 1)
             for j in range(start, end):
                 if i == j:
                     continue
