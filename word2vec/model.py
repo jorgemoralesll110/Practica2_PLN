@@ -33,11 +33,11 @@ class SkipGram:
 
     def train(self, pairs, epochs=100, shuffle=True, verbose_every=10):
         n = len(pairs)
+        total_loss = 0.0
         rng = np.random.default_rng(0)
         for ep in range(1, epochs + 1):
             if shuffle:
                 rng.shuffle(pairs)
-            total_loss = 0.0
             for c_idx, x_idx in pairs:
                 h, u, y_pred = self.forward(c_idx)
                 total_loss += -np.log(y_pred[x_idx] + 1e-10)
@@ -50,7 +50,7 @@ class SkipGram:
         return self.W_in[idx]
 
     @staticmethod
-    def _cosine(a, b):
+    def cosine(a, b):
         return (a @ b) / (np.linalg.norm(a) * np.linalg.norm(b) + 1e-12)
 
     def nearest_neighbors(self, word_idx: int, top_k = 5):
@@ -59,7 +59,7 @@ class SkipGram:
         for j in range(self.vocab_size):
             if j == word_idx:
                 continue
-            sims.append((j, self._cosine(v, self.W_in[j])))
+            sims.append((j, self.cosine(v, self.W_in[j])))
         sims.sort(key = lambda x: x[1], reverse = True)
         return sims[:top_k]
 

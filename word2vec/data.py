@@ -2,7 +2,7 @@ from typing import List, Tuple
 import re
 import unicodedata
 
-_TOKEN_RE = re.compile(r"[^\W\d_]+|\d+", flags=re.UNICODE) #letras unicode, incluye acentos. Separa palabras en español
+TOKEN_RE = re.compile(r"[^\W\d_]+|\d+", flags=re.UNICODE)
 
 # Función para cargar y tokenizar las frases
 def load_and_tokenize(
@@ -16,7 +16,7 @@ def load_and_tokenize(
     with open(path, "r", encoding="utf-8") as f:
         raw = f.read()
 
-    raw = _normalize_text(raw, lowercase=lowercase, strip_accents=strip_accents) #normaliza el texto
+    raw = normalize_text(raw, lowercase=lowercase, strip_accents=strip_accents)
 
     sentences: List[List[str]] = []
     all_words: List[str] = []
@@ -26,7 +26,7 @@ def load_and_tokenize(
         if not line:
             continue
 
-        tokens = _TOKEN_RE.findall(line)
+        tokens = TOKEN_RE.findall(line)
 
         clean_tokens = []
         for tok in tokens:
@@ -43,7 +43,7 @@ def load_and_tokenize(
     return sentences, all_words
 
 
-def _normalize_text(text: str, lowercase: bool = True, strip_accents: bool = False) -> str:
+def normalize_text(text: str, lowercase: bool = True, strip_accents: bool = False) -> str:
     text = unicodedata.normalize("NFC", text)
 
     if lowercase:

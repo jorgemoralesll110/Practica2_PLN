@@ -13,7 +13,7 @@ def print_neighbors(model, vocab, inv_vocab, words: List[str], top_k: int = 5):
         for j, sim in neighbors:
             print(f"  - {inv_vocab[j]}: {sim:.4f}")
 
-def analogy_test(model, vocab, inv_vocab, a: str, b: str, c: str, top_k: int = 3):
+def analogy_test(model, vocab, a: str, b: str, c: str, top_k: int = 3):
     if a == b:
         raise ValueError("Analogía trivial: a y b son iguales")
 
