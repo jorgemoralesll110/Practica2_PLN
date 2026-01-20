@@ -20,13 +20,14 @@ El objetivo del trabajo es comprender el funcionamiento interno del modelo Word2
 
 El modelo se entrena utilizando **softmax completo sobre todo el vocabulario**, lo que permite seguir de forma directa la formulación original del modelo y analizar con claridad el cálculo de probabilidades y gradientes. Aunque este enfoque no es escalable a grandes vocabularios, resulta adecuado en un contexto docente donde se prioriza la comprensión conceptual.
 
+Con el objetivo de mejorar la calidad de los embeddings obtenidos, se ha llevado a cabo una **búsqueda  de hiperparámetros**, evaluando distintas combinaciones de dimensión del espacio vectorial, tamaño de la ventana de contexto, tasa de aprendizaje y número de épocas de entrenamiento. Cada configuración fue analizada mediante métricas cuantitativas, como la pérdida final del modelo y la similitud media entre palabras y sus vecinos más cercanos, así como mediante inspección cualitativa de vecinos semánticos y analogías. Este proceso permitió seleccionar un conjunto de hiperparámetros que ofrece un equilibrio adecuado entre estabilidad del entrenamiento y coherencia semántica de las representaciones aprendidas.
+
+
 El corpus utilizado ha sido construido de forma controlada para incluir patrones lingüísticos claros, como:
 - relaciones de género gramatical,
 - asociaciones entre agentes y acciones,
 - atributos de objetos,
 - relaciones geográficas simples.
 
-La evaluación del modelo combina:
-- un **análisis cuantitativo**, basado en la pérdida final del entrenamiento y en la similitud media entre palabras y sus vecinos más cercanos,
-- y un **análisis cualitativo**, mediante la inspección de vecinos semánticos y analogías no triviales diseñadas de acuerdo con el contenido del corpus.
+
 
